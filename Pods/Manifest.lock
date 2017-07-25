@@ -1,0 +1,44 @@
+PODS:
+  - Charts (3.0.2):
+    - Charts/Core (= 3.0.2)
+  - Charts/Core (3.0.2)
+  - EasyPeasy (1.4.2)
+  - FSCalendar (2.7.9)
+  - Instructions (1.0.0)
+  - IQKeyboardManagerSwift (4.0.10)
+  - JVFloatLabeledTextField (1.2.0)
+  - LTHRadioButton (1.1.1)
+  - MarqueeLabel/Swift (3.1.0)
+  - NotificationBannerSwift (1.4.0):
+    - MarqueeLabel/Swift
+    - SnapKit (~> 3.2)
+  - SCLAlertView (0.7.0)
+  - SnapKit (3.2.0)
+
+DEPENDENCIES:
+  - Charts
+  - EasyPeasy
+  - FSCalendar
+  - Instructions
+  - IQKeyboardManagerSwift
+  - JVFloatLabeledTextField
+  - LTHRadioButton
+  - NotificationBannerSwift
+  - SCLAlertView
+
+SPEC CHECKSUMS:
+  Charts: 236d6ccdd0ce6feae151d89e829a7397381a21fd
+  EasyPeasy: 50e7130b61f495ce105796e438d4136e2c8d2cc0
+  FSCalendar: a04b09f16f811bc92e82f3cf852a15225233b9d5
+  Instructions: 11b6744e572b8cab6f61e9445403cb95fcde68f1
+  IQKeyboardManagerSwift: 75ba21a23794a1e6b6fe6d9a267ea17f80e06771
+  JVFloatLabeledTextField: 96c0c1b6739001801340d25b86aff990d67c4181
+  LTHRadioButton: 6d54db446b2edba0eafcb65b28deedb09dad8a47
+  MarqueeLabel: 061d04687ee5485ac035b45c8e292274a87afe01
+  NotificationBannerSwift: b2a81c9f0f816851686ca2e802058afd65676adc
+  SCLAlertView: 8a14ffc40590c619e183eed2298b854385f30be1
+  SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
+
+PODFILE CHECKSUM: 6e6984abde4b472657e151a1db95ebf1b9e2a63c
+
+COCOAPODS: 1.2.1
