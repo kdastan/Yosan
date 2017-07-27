@@ -56,13 +56,20 @@ extension SetUpViewController:  FSCalendarDelegate {
 }
 
 extension ViewController: ChartViewDelegate {
+    
+    
+    
     func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
-        let track = ["Transport", "Food", "Entertain", "Products", "Other"]
+        let track = ["Transport", "Food", "Entertainment", "Products", "Other"]
+        
         chart.centerText = "\(track[Int(highlight.x)]) \n \(Int(highlight.y)) KZT"
     }
     
     func chartValueNothingSelected(_ chartView: ChartViewBase) {
-        chart.centerText = "Today"
+        let myAttribute = [ NSFontAttributeName: UIFont(name: "Helvetica", size: 18.0)! ]
+        let myAttrString = NSAttributedString(string: "Today", attributes: myAttribute)
+        
+        chart.centerAttributedText = myAttrString
     }
 }
 

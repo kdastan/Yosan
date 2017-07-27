@@ -112,6 +112,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
+    
+    func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
+        
+        if let vc = self.window?.rootViewController as? UITabBarController {
+            vc.selectedIndex = 0
+//            let vc1 = ViewController()
+            
+            switch shortcutItem.type {
+            case "com.kumardastan.Yosanapp.addTransport":
+                (vc.viewControllers?.first as? ViewController)?.addRecord3D(category: "transport")
+            case "com.kumardastan.Yosanapp.addFood":
+                (vc.viewControllers?.first as? ViewController)?.addRecord3D(category: "food")
+            case "com.kumardastan.Yosanapp.addEntertainment":
+                (vc.viewControllers?.first as? ViewController)?.addRecord3D(category: "entertainment")
+            case "com.kumardastan.Yosanapp.addProducts":
+                (vc.viewControllers?.first as? ViewController)?.addRecord3D(category: "products")
+            case "com.kumardastan.Yosanapp.addOther":
+                (vc.viewControllers?.first as? ViewController)?.addRecord3D(category: "other")
+            default:
+                (vc.viewControllers?.first as? ViewController)?.addRecord3D(category: "products")
+            }
+            
+            
+
+        
+        }
+        
+        
+    }
 
 }
 

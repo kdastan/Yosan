@@ -139,7 +139,7 @@ class ViewController: UIViewController {
             kTitleFont: UIFont(name: "HelveticaNeue", size: 20)!,
             kTextFont: UIFont(name: "HelveticaNeue", size: 14)!,
             kButtonFont: UIFont(name: "HelveticaNeue-Bold", size: 14)!,
-            showCloseButton: false,
+            showCloseButton: true,
             disableTapGesture: true
         )
         
@@ -162,7 +162,36 @@ class ViewController: UIViewController {
         tableView.frame = CGRect(x: 0, y: 0, width: 200, height: 175)
         
         alert.customSubview = tableView
-        alert.showEdit("New record", subTitle: "")
+        alert.showEdit("New expense", subTitle: "", closeButtonTitle: "Cancel")
+    }
+    
+    func addRecord3D(category: String) {
+        let appearance = SCLAlertView.SCLAppearance(
+            kTitleFont: UIFont(name: "HelveticaNeue", size: 20)!,
+            kTextFont: UIFont(name: "HelveticaNeue", size: 14)!,
+            kButtonFont: UIFont(name: "HelveticaNeue-Bold", size: 14)!,
+            showCloseButton: true,
+            disableTapGesture: true
+        )
+        
+        let alert = SCLAlertView(appearance: appearance)
+        let txt = alert.addTextField("Enter here")
+        txt.keyboardType = .numberPad
+        alert.addButton("Submit") {
+            guard let data = txt.text, txt.text != "" else {
+                return
+            }
+            
+            let newData = Int(data)
+            let selectedCategory = category
+            
+            self.setCategoriesData(category: selectedCategory, money: newData!)
+            self.updateBalanceData(money: newData!)
+            self.getBalanceData()
+            self.getExpenseDataForChart()
+        }
+        
+        alert.showEdit("New record", subTitle: "How much money did you spent for \(category) ?", closeButtonTitle: "Cancel")
     }
     
     //MARK: Updates balance model. Works fine
@@ -251,6 +280,7 @@ class ViewController: UIViewController {
         }
         let set = PieChartDataSet( values: entries, label: "")
         set.drawValuesEnabled = false
+        
         let colors: [UIColor] = [.moneyColor, .dateColor, .moneyInfoColor, .infoColor, .calendarTodayColor]
         set.colors = colors
         
@@ -260,15 +290,20 @@ class ViewController: UIViewController {
         chart.drawSlicesUnderHoleEnabled = false
         chart.legend.enabled = false
         
+        
         chart.isUserInteractionEnabled = true
         
         let d = Description()
         d.text = ""
         chart.chartDescription = d
-        chart.centerText = "Today"
         
-        chart.holeRadiusPercent = 0.3
-        chart.transparentCircleRadiusPercent = 0.35
+        let myAttribute = [ NSFontAttributeName: UIFont(name: "Helvetica", size: 18.0)! ]
+        let myAttrString = NSAttributedString(string: "Today", attributes: myAttribute)
+        
+        chart.centerAttributedText = myAttrString
+        
+        chart.holeRadiusPercent = 0.4
+        chart.transparentCircleRadiusPercent = 0.45
     }
     
     //MARK: Adds new record in Expens model. Works fine
