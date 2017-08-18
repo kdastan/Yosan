@@ -58,7 +58,7 @@ class SetUpViewController: UIViewController {
     
     lazy var textField: JVFloatLabeledTextField = {
         let textField = JVFloatLabeledTextField()
-        textField.placeholder = "Enter money here: "
+        textField.placeholder = "How much money ready to spent?"
         textField.placeholderColor = .white
         textField.keyboardType = .numberPad
         textField.textColor = .white
@@ -98,7 +98,6 @@ class SetUpViewController: UIViewController {
         intro.dataSource = self
         
         view.backgroundColor = .backgroundColor
-        //print(Realm.Configuration.defaultConfiguration.fileURL!)
         setupViews()
         setupConstraints()
         firstLaunc()
@@ -201,9 +200,9 @@ class SetUpViewController: UIViewController {
         ]
         
         textField <- [
-            Width(185),
+            Width(UIScreen.main.bounds.width - 100),
             Height(50),
-            CenterX(0),
+            CenterX(),
             Top(25).to(calendar, .bottom)
         ]
         

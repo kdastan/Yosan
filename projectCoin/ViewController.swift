@@ -59,7 +59,7 @@ class ViewController: UIViewController {
         container.labelData.text = "YESTERDAY"
         container.labelDate.text = ""
         container.labelSpent.text = "spent"
-        container.labelMoney.text = "2.210 KZT"
+        container.labelMoney.text = "2.210 USD"
         return container
     }()
     
@@ -68,7 +68,7 @@ class ViewController: UIViewController {
         container.labelData.text = "TODAY"
         container.labelDate.text = ""
         container.labelSpent.text = "available"
-        container.labelMoney.text = "3.100 KZT"
+        container.labelMoney.text = "3.100 USD"
         return container
     }()
     
@@ -77,7 +77,7 @@ class ViewController: UIViewController {
         container.labelData.text = "NEXT DAY"
         container.labelDate.text = ""
         container.labelSpent.text = "available"
-        container.labelMoney.text = "3.100 KZT"
+        container.labelMoney.text = "3.100 USD"
         return container
     }()
     
@@ -104,7 +104,7 @@ class ViewController: UIViewController {
     
     lazy var labelRemaingAmountMoney: UILabel = {
         let label = UILabel()
-        label.text = "35,000 KZT"
+        label.text = "35,000 USD"
         label.font = UIFont(name: "Helvetica", size: 37)
         label.textColor = .moneyColor
         return label
@@ -177,6 +177,7 @@ class ViewController: UIViewController {
         let alert = SCLAlertView(appearance: appearance)
         let txt = alert.addTextField("Enter here")
         txt.keyboardType = .numberPad
+        txt.becomeFirstResponder()
         alert.addButton("Submit") {
             guard let data = txt.text, txt.text != "" else {
                 return
@@ -224,7 +225,7 @@ class ViewController: UIViewController {
         for spentMoney in yesterdaySpentTotalAmount {
             yesterday += spentMoney.amount
         }
-        lastContainer.labelMoney.text = "\(yesterday) KZT"
+        lastContainer.labelMoney.text = "\(yesterday) USD"
         
         uploadDays()
     }
@@ -334,7 +335,7 @@ class ViewController: UIViewController {
         
         for data in datas {
             labelRemaingAmountDeadline.text = data.deadline
-            labelRemaingAmountMoney.text = "\(String(data.anountBalance)) KZT"
+            labelRemaingAmountMoney.text = "\(String(data.anountBalance)) USD"
             
             todayFromBalance = data.today
             tomorrowFromBalance  = data.tomorrow
@@ -345,9 +346,9 @@ class ViewController: UIViewController {
         }
         
         if dateFromBalance == "" {
-            secondContainer.labelMoney.text = "\(todayFromBalance) KZT"
-            nextContainer.labelMoney.text = "0 KZT"
-            labelRemaingAmountMoney.text = "\(totalBalance) KZT"
+            secondContainer.labelMoney.text = "\(todayFromBalance) USD"
+            nextContainer.labelMoney.text = "0 USD"
+            labelRemaingAmountMoney.text = "\(totalBalance) USD"
         }
         
         else if resultToday != dateFromBalance {
@@ -403,15 +404,15 @@ class ViewController: UIViewController {
             }
             
             if dayInterval == 0 {
-                nextContainer.labelMoney.text = "0 KZT"
+                nextContainer.labelMoney.text = "0 USD"
             } else {
-                nextContainer.labelMoney.text = "\(tomorrowFromBalance) KZT"
+                nextContainer.labelMoney.text = "\(tomorrowFromBalance) USD"
             }
             self.yesterdayExpens()
         }
         
-        secondContainer.labelMoney.text = "\(todayFromBalance) KZT"
-        labelRemaingAmountMoney.text = "\(totalBalance) KZT"
+        secondContainer.labelMoney.text = "\(todayFromBalance) USD"
+        labelRemaingAmountMoney.text = "\(totalBalance) USD"
         self.yesterdayExpens()
     }
     

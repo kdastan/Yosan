@@ -17,7 +17,6 @@ class RadioTableViewCell: UITableViewCell {
     
     lazy var radiocell: LTHRadioButton = {
         let radiocell = LTHRadioButton()
-        //radiocell.translatesAutoresizingMaskIntoConstraints = false
         return radiocell
     }()
     
@@ -60,8 +59,8 @@ class RadioTableViewCell: UITableViewCell {
     }
     
     func update(with color: UIColor) {
-        backgroundColor             = color
-        radiocell.selectedColor   = color == .darkGray ? .white : selectedColor
+        backgroundColor = color
+        radiocell.selectedColor = color == .darkGray ? .white : selectedColor
         radiocell.deselectedColor = color == .darkGray ? .lightGray : deselectedColor
     }
     
@@ -70,7 +69,6 @@ class RadioTableViewCell: UITableViewCell {
         
         if selected {
             return radiocell.select(animated: animated)
-            
         }
         
         radiocell.deselect(animated: animated)
