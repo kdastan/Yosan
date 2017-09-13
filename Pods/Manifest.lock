@@ -12,6 +12,7 @@ PODS:
   - NotificationBannerSwift (1.4.0):
     - MarqueeLabel/Swift
     - SnapKit (~> 3.2)
+  - PopupDialog (0.5.4)
   - SCLAlertView (0.7.0)
   - SnapKit (3.2.0)
 
@@ -24,6 +25,7 @@ DEPENDENCIES:
   - JVFloatLabeledTextField
   - LTHRadioButton
   - NotificationBannerSwift
+  - PopupDialog (~> 0.5)
   - SCLAlertView
 
 SPEC CHECKSUMS:
@@ -36,9 +38,10 @@ SPEC CHECKSUMS:
   LTHRadioButton: 6d54db446b2edba0eafcb65b28deedb09dad8a47
   MarqueeLabel: 061d04687ee5485ac035b45c8e292274a87afe01
   NotificationBannerSwift: b2a81c9f0f816851686ca2e802058afd65676adc
+  PopupDialog: 75cf955693590b0cb2fdde00223fb65d99c57247
   SCLAlertView: 8a14ffc40590c619e183eed2298b854385f30be1
   SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
 
-PODFILE CHECKSUM: 6e6984abde4b472657e151a1db95ebf1b9e2a63c
+PODFILE CHECKSUM: ec730007b6f678f6ff57e4f249e348409f383a1c
 
 COCOAPODS: 1.2.1

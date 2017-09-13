@@ -57,12 +57,10 @@ extension SetUpViewController:  FSCalendarDelegate {
 
 extension ViewController: ChartViewDelegate {
     
-    
-    
     func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
         let track = ["Transport", "Food", "Entertainment", "Products", "Other"]
         
-        chart.centerText = "\(track[Int(highlight.x)]) \n \(Int(highlight.y)) KZT"
+        chart.centerText = "\(track[Int(highlight.x)]) \n \(Int(highlight.y)) \(currentCurrency)"
     }
     
     func chartValueNothingSelected(_ chartView: ChartViewBase) {
@@ -98,7 +96,7 @@ extension SetUpViewController: CoachMarksControllerDataSource {
 extension ViewController: CoachMarksControllerDataSource {
 
     func numberOfCoachMarks(for coachMarksController: CoachMarksController) -> Int {
-        return 6
+        return 7
     }
     
     func coachMarksController(_ coachMarksController: CoachMarksController, coachMarkAt index: Int) -> CoachMark {

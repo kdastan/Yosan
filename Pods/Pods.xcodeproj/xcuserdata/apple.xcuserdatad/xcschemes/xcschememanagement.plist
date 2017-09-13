@@ -59,6 +59,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>PopupDialog.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>SCLAlertView.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -82,17 +87,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>402CFEA45DD3E74BF0A49BE75C9DF989</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>635A1A6F47FA452B8EFE432BD9883945</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>6FFF9A0488BA9FA46CAC0F6F1BA0A397</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>76D42A142E6D13C0951C3B1157D9AB8D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>AF718AFB933FADFEBF54335C87BAB246</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -113,6 +118,11 @@
 			<true/>
 		</dict>
 		<key>C7E22BEB205BF5EDC7D383150E23BC40</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CF0273E6C4CC15D6E2ED5D22550DED3C</key>
 		<dict>
 			<key>primary</key>
 			<true/>

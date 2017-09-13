@@ -37,12 +37,11 @@ extension Date {
 }
 
 extension ViewController {
-
     static let descDeadline = "Here shows date when your choosen interval ends"
     static let descRemainMoney = "Total amount of money left in your balance"
     static let descButton = "Add new expense, choose category and spent money"
     static let descAvailableMoneyToday = "Available money to spend today"
     static let descAvailableMoneyTomorrow = "Available money to spend tomorrow"
     static let descChart = "Visual appearance of spent money"
-    
+    static let currencyChager = "Change currency"
 }

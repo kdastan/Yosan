@@ -13,14 +13,17 @@ import SCLAlertView
 import RealmSwift
 import NotificationBannerSwift
 import Instructions
+import PopupDialog
 
 class ViewController: UIViewController {
     
     var arr: [UIView] = []
     
+    var currentCurrency: String = ""
+    
     let isFirstLaunch = UIApplication.isFirstLaunch()
 
-    var arrOfDescription = [descDeadline, descRemainMoney, descButton, descAvailableMoneyToday, descAvailableMoneyTomorrow, descChart]
+    var arrOfDescription = [descDeadline, descRemainMoney, currencyChager, descButton, descAvailableMoneyToday, descAvailableMoneyTomorrow, descChart]
     var todayFromBalance = 0
     var tomorrowFromBalance  = 0
     var amountBalance = 0
@@ -32,6 +35,8 @@ class ViewController: UIViewController {
     var resultToday = ""
     var resultYesterday = ""
     var resultTomorrow = ""
+    
+    var customCurrencyEntered: UITextField!
     
     var categories = ["transport", "food", "entertainment", "products", "others"]
     var chartCategoryData: [Double] = [10, 0, 0, 0, 0]
@@ -129,6 +134,13 @@ class ViewController: UIViewController {
         return button
     }()
     
+    lazy var changeCurrency: UIButton = {
+        let changeCurrency = UIButton()
+        changeCurrency.setImage(UIImage(named: "currency"), for: .normal)
+        changeCurrency.addTarget(self, action: #selector(currencyChanger), for: .touchUpInside)
+        return changeCurrency
+    }()
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
@@ -158,6 +170,7 @@ class ViewController: UIViewController {
             self.updateBalanceData(money: newData!)
             self.getBalanceData()
             self.getExpenseDataForChart()
+            self.currencyGetter()
         }
         tableView.frame = CGRect(x: 0, y: 0, width: 200, height: 175)
         
@@ -195,6 +208,71 @@ class ViewController: UIViewController {
         alert.showEdit("New record", subTitle: "How much money did you spent for \(category) ?", closeButtonTitle: "Cancel")
     }
     
+    func currencyChanger() {
+        let popup = PopupDialog(title: "Currency changer", message: "Choose currency from list or type custom one")
+        
+        let USDbutton = DefaultButton(title: "USD") {
+            self.currencySetter(currencyValue: "USD")
+        }
+        let CNYbutton = DefaultButton(title: "CNY") {
+            self.currencySetter(currencyValue: "CNY")
+        }
+        let RUBbutton = DefaultButton(title: "RUB") {
+            self.currencySetter(currencyValue: "RUB")
+        }
+        let Custombutton = DefaultButton(title: "Custom currency") {
+            self.customCurrency()
+        }
+        let cancelButton = CancelButton(title: "Cancel") {
+            print("Cancel pressed")
+        }
+        
+        popup.addButtons([USDbutton, CNYbutton, RUBbutton, Custombutton, cancelButton])
+        
+        self.present(popup, animated: true, completion: nil)
+    }
+    
+    func customCurrency() {
+        let alert = UIAlertController(title: "New currency", message: "Enter new currency", preferredStyle: UIAlertControllerStyle.alert)
+        
+        let action = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) {
+            UIAlertAction in
+            self.someFunc()
+        }
+        
+        alert.addAction(action)
+        
+        alert.addTextField { (textField) in
+            textField.placeholder = "Type here"
+            self.customCurrencyEntered = textField
+        }
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func someFunc() {
+        guard let newCurrency = customCurrencyEntered.text, customCurrencyEntered.text != "" else {
+            return
+        }
+        print(newCurrency)
+        currencySetter(currencyValue: newCurrency)
+    }
+    
+    //MARK: Currency setter - connects with realm
+    func currencySetter(currencyValue: String) {
+        let currencyCur = Currency()
+        currencyCur.currencyID = "reusable"
+        currencyCur.currency = currencyValue
+        
+        let realm = try! Realm()
+        try! realm.write {
+            realm.add(currencyCur, update: true)
+        }
+        
+        getBalanceData()
+        getExpenseDataForChart()
+    }
+    
+    
     //MARK: Updates balance model. Works fine
     func updateBalanceData(money: Int) {
         let balance = Balance()
@@ -219,13 +297,16 @@ class ViewController: UIViewController {
     }
     
     func yesterdayExpens() {
+        currencyGetter() //
+        
         var yesterday = 0
+        
         let realm = try! Realm()
         let yesterdaySpentTotalAmount = realm.objects(Expens).filter("date = %@", resultYesterday)
         for spentMoney in yesterdaySpentTotalAmount {
             yesterday += spentMoney.amount
         }
-        lastContainer.labelMoney.text = "\(yesterday) USD"
+        lastContainer.labelMoney.text = "\(yesterday) \(currentCurrency)"
         
         uploadDays()
     }
@@ -325,6 +406,8 @@ class ViewController: UIViewController {
     //MARK: Loads data from Balance to represent in ViewController
     func getBalanceData() {
         
+        currencyGetter()
+        
         resultToday = formatter.string(from: Date())
         resultYesterday = formatter.string(from: Date().yesterday)
 
@@ -335,7 +418,7 @@ class ViewController: UIViewController {
         
         for data in datas {
             labelRemaingAmountDeadline.text = data.deadline
-            labelRemaingAmountMoney.text = "\(String(data.anountBalance)) USD"
+            labelRemaingAmountMoney.text = "\(String(data.anountBalance)) \(currentCurrency)"
             
             todayFromBalance = data.today
             tomorrowFromBalance  = data.tomorrow
@@ -346,9 +429,9 @@ class ViewController: UIViewController {
         }
         
         if dateFromBalance == "" {
-            secondContainer.labelMoney.text = "\(todayFromBalance) USD"
-            nextContainer.labelMoney.text = "0 USD"
-            labelRemaingAmountMoney.text = "\(totalBalance) USD"
+            secondContainer.labelMoney.text = "\(todayFromBalance) \(currentCurrency)"
+            nextContainer.labelMoney.text = "0 \(currentCurrency)"
+            labelRemaingAmountMoney.text = "\(totalBalance) \(currentCurrency)"
         }
         
         else if resultToday != dateFromBalance {
@@ -404,15 +487,15 @@ class ViewController: UIViewController {
             }
             
             if dayInterval == 0 {
-                nextContainer.labelMoney.text = "0 USD"
+                nextContainer.labelMoney.text = "0 \(currentCurrency)"
             } else {
-                nextContainer.labelMoney.text = "\(tomorrowFromBalance) USD"
+                nextContainer.labelMoney.text = "\(tomorrowFromBalance) \(currentCurrency)"
             }
             self.yesterdayExpens()
         }
         
-        secondContainer.labelMoney.text = "\(todayFromBalance) USD"
-        labelRemaingAmountMoney.text = "\(totalBalance) USD"
+        secondContainer.labelMoney.text = "\(todayFromBalance) \(currentCurrency)"
+        labelRemaingAmountMoney.text = "\(totalBalance) \(currentCurrency)"
         self.yesterdayExpens()
     }
     
@@ -431,7 +514,7 @@ class ViewController: UIViewController {
         chart.delegate = self
         intro.dataSource = self
         
-        //print(Realm.Configuration.defaultConfiguration.fileURL!)
+        print(Realm.Configuration.defaultConfiguration.fileURL!)
         
         formatter.dateFormat = "dd/MM/yy"
         resultToday = formatter.string(from: Date())
@@ -439,16 +522,28 @@ class ViewController: UIViewController {
         labelRemaingAmountDeadline.text = "dd/mm/yyyy"
         labelRemaingAmountMoney.text = "No data available"
 
-        arr = [labelRemaingAmountDeadline, labelRemaingAmountMoney, addRecordButton, secondContainer.labelMoney, nextContainer.labelMoney, chart]
+        arr = [labelRemaingAmountDeadline, labelRemaingAmountMoney, changeCurrency, addRecordButton, secondContainer.labelMoney, nextContainer.labelMoney, chart]
         
         firstLaunch()
         
         uploadDays()
+        currencyGetter()
         
         setupViews()
         setupConstraints()
         getBalanceData()
         
+    }
+    
+    //MARK: Fetches current currency from Realm
+    func currencyGetter() {
+        let realm = try! Realm()
+        let data = realm.objects(Currency)
+        guard let currency = data.first?.currency else {
+            currentCurrency = "USD"
+            return
+        }
+        currentCurrency = currency
     }
     
     func uploadDays() {
@@ -470,7 +565,7 @@ class ViewController: UIViewController {
         uploadDays()
         getBalanceData()
         getExpenseDataForChart()
-       
+        currencyGetter()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -486,6 +581,7 @@ class ViewController: UIViewController {
         container.addSubview(labelRemaingAmountDeadline)
         container.addSubview(labelRemaingAmountMoney)
         container.addSubview(addRecordButton)
+        container.addSubview(changeCurrency)
         
         view.addSubview(lastContainer)
         view.addSubview(secondContainer)
@@ -558,8 +654,13 @@ class ViewController: UIViewController {
     
         addRecordButton <- [
             CenterY(0).to(labelRemainingAmountText),
-            Right(10),
-            Right(0)
+            Right(10)
+            //Right(0)
+        ]
+        
+        changeCurrency <- [
+            CenterY(0).to(labelRemainingAmountText),
+            Right(20).to(addRecordButton, .left)
         ]
     }
 }

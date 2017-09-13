@@ -15,6 +15,7 @@ target 'projectCoin' do
   pod 'LTHRadioButton'
   pod 'NotificationBannerSwift'
   pod 'Instructions'
+  pod 'PopupDialog', '~> 0.5'
 
   target 'projectCoinTests' do
     inherit! :search_paths
