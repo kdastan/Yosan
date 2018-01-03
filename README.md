@@ -25,4 +25,4 @@ As a code style was choosen 'raywenderlich.com Swift Style Guide'.
 [Link to App Store](https://itunes.apple.com/us/app/yosan-budget-by-daily-limits/id1262906921?mt=8)
 
 ## Credentials
-© [Kumar Dastan]()
+© [Kumar Dastan](https://github.com/kdastan)
